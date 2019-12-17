@@ -4,39 +4,34 @@ const path = require('path');
 const compression = require('compression');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const port = process.env.PORT || 5100;
+
+const mongoConfig = require('./config/mongo');
+const serverConfig = require('./config/server');
+const distConfig = require('./config/dist')(path, __dirname);
 
 const app = express();
-const mongooseConnectionOptions = {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-};
 
-app.use(cors());
-app.use(compression());
-app.use(express.static(__dirname + process.env.ADMIN_DIST));
+app
+    .use(express.static(distConfig.ADMIN_DIST))
+    .use(cors())
+    .use(compression());
 
-app.get('/*', function (req, res, next) {
-    res.sendFile(path.resolve(__dirname + process.env.ADMIN_DIST + '/index.html'));
+app.get('/*', (req, res) => {
+    res.sendFile(path.resolve(distConfig.ADMIN_DIST, 'index.html'));
 });
 
 
-app.listen(port, () => {
+app.listen(serverConfig.PORT, () => {
     connectDb();
     serverCb();
 });
 
-function connectDb() {
-    console.log(process.env.MONGODB_URI);
-    mongoose.connect(process.env.MONGODB_URI, mongooseConnectionOptions)
-        .then(() => {
-            console.log('Connected to db');
-        })
-        .catch(err => {
-            console.error(err);
-        });
-}
+const connectDb = () => {
+    mongoose.connect(mongoConfig.MONGODB_URI, mongoConfig.CONNECTION_OPTIONS)
+        .then(() => console.log('************\nConnected to db\n************'))
+        .catch(err => console.error(err));
+};
 
-function serverCb() {
-    console.info(`Server is working on port ${port} =)`);
-}
+const serverCb = () => {
+    console.log(`************\nServer is working on port ${serverConfig.PORT} =)\n************`);
+};
