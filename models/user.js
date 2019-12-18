@@ -13,7 +13,8 @@ const userSchema = new mongoose.Schema({
         email: {
             type: String,
             trim: true,
-            required: true
+            required: true,
+            unique: true
         },
         phone: {
             type: String,
@@ -21,7 +22,8 @@ const userSchema = new mongoose.Schema({
         },
         role: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'UserRole'
+            ref: 'Role',
+            required: true
         },
         password: {
             type: String,

@@ -10,13 +10,13 @@ const userRoleSchema = new mongoose.Schema({
             enum: [...Object.values(userRoles)],
             default: userRoles.USER
         },
-        type: {
+        level: {
             type: Number,
-            min: 0,
-            max: 3,
-            required: true,
-            unique: true,
-            index: true
+            // min: 0,
+            // max: 3,
+            // required: true,
+            // unique: true,
+            // index: true
         }
     },
     {timestamps: false});
