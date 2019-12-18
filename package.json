@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start-server": "nodemon app.js"
+    "start-server": "nodemon app.js",
+    "create-user-roles": "node scripts/add-default-roles.js"
   },
   "author": "Irina Shevchenko",
   "license": "ISC",

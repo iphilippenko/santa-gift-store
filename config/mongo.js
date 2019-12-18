@@ -2,6 +2,7 @@ module.exports = {
     MONGODB_URI: process.env.MONGODB_URI,
     DB_NAME: process.env.DB_NAME,
     CONNECTION_OPTIONS: {
+        useCreateIndex: true,
         useNewUrlParser: true,
         useUnifiedTopology: true,
         dbName: process.env.DB_NAME,
