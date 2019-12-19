@@ -5,21 +5,31 @@ const compression = require('compression');
 const cors = require('cors');
 const mongoose = require('mongoose');
 
+const router = require('./api/api-routes/router')();
 const mongoConfig = require('./api/config/mongo');
 const serverConfig = require('./api/config/server');
 const distConfig = require('./api/config/dist')(path, __dirname);
+const ServiceError = require('./api/config/error');
 
 const app = express();
 
 app
     .use(express.static(distConfig.ADMIN_DIST))
     .use(cors())
-    .use(compression());
-
-app.get('/*', (req, res) => {
-    res.sendFile(path.resolve(distConfig.ADMIN_DIST, 'index.html'));
-});
-
+    .use(compression())
+    .get('/*', (req, res, next) => {
+        if (req.originalUrl.match(/\/api/g)) {
+            next();
+        } else {
+            res.sendFile(path.resolve(distConfig.ADMIN_DIST, 'index.html'));
+        }
+    })
+    .use('/api', router)
+    .use((req, res) => res
+        .status(ServiceError.STATUS.NOT_FOUND)
+        .send(new ServiceError('not found',
+            ServiceError.STATUS.NOT_FOUND,
+            ServiceError.CODE.ERROR_NOT_FOUND)));
 
 app.listen(serverConfig.PORT, () => {
     connectDb();

@@ -51,6 +51,7 @@ const statusCodes = {
 };
 
 const errorCodes = {
+    ERROR_NOT_FOUND: 'error_not_found',
     ERROR_MONGODB_SAVING: 'error_save_database',
     ERROR_MONGODB_FIND: 'error_find_database',
     ERROR_MONGODB_DELETE: 'error_delete_database',
@@ -60,7 +61,6 @@ const errorCodes = {
     INVALID_EMAIL: 'invalid_email',
     INVALID_PHONE: 'invalid_phone',
     INVALID_USER_NOT_FOUND: 'invalid_user_not_found',
-    INVALID_DUPLICATE_PROMOCODE: 'invalid_duplicate_promocode',
     INVALID_DUPLICATE_MONGODB_SAVE: 'invalid_duplicate_mongodb_save',
     //PERMISSIONS
     INVALID_PERMISSION: 'invalid_permission'
