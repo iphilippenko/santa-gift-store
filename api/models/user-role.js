@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const userRoles = require('../constants/user-roles');
 
 const userRoleSchema = new mongoose.Schema({
@@ -12,11 +11,11 @@ const userRoleSchema = new mongoose.Schema({
         },
         level: {
             type: Number,
-            // min: 0,
-            // max: 3,
-            // required: true,
-            // unique: true,
-            // index: true
+            min: 0,
+            max: 3,
+            required: true,
+            unique: true,
+            index: true
         }
     },
     {timestamps: false});

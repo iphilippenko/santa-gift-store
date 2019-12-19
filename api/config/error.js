@@ -58,7 +58,8 @@ const errorCodes = {
     ERROR_SERVER: 'error_server',
     ERROR_EMAIL_ALREADY_TAKEN: 'error_email_already_taken',
     INVALID_EMAIL: 'invalid_email',
-    INVALID_USERS_NOT_FOUND: 'invalid_users_not_found',
+    INVALID_PHONE: 'invalid_phone',
+    INVALID_USER_NOT_FOUND: 'invalid_user_not_found',
     INVALID_DUPLICATE_PROMOCODE: 'invalid_duplicate_promocode',
     INVALID_DUPLICATE_MONGODB_SAVE: 'invalid_duplicate_mongodb_save',
     //PERMISSIONS

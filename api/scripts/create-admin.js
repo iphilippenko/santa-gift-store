@@ -4,6 +4,7 @@ const mongoConfig = require('../config/mongo');
 const {createUser, getUserInstance} = require('../services/users');
 const adminConfig = require('../config/admin-user');
 const {getRole} = require('../services/roles');
+const ServiceError = require('../config/error');
 
 const connectDB = () => {
     mongoose.connect(mongoConfig.MONGODB_URI, mongoConfig.CONNECTION_OPTIONS)
@@ -37,7 +38,9 @@ const createAdmin = async (user) => {
             console.log('User saved!');
         } catch (err) {
             console.log(`Cannot save user`);
-            console.error(err);
+            console.error(new ServiceError(err,
+                ServiceError.STATUS.INTERNAL_SERVER_ERROR,
+                ServiceError.CODE.ERROR_MONGODB_SAVING));
         }
     }
 };

@@ -5,9 +5,9 @@ const compression = require('compression');
 const cors = require('cors');
 const mongoose = require('mongoose');
 
-const mongoConfig = require('./config/mongo');
-const serverConfig = require('./config/server');
-const distConfig = require('./config/dist')(path, __dirname);
+const mongoConfig = require('./api/config/mongo');
+const serverConfig = require('./api/config/server');
+const distConfig = require('./api/config/dist')(path, __dirname);
 
 const app = express();
 
