@@ -28,10 +28,10 @@ const getUsers = () => {
     }))
 };
 
-const getUser = (searchKey, searchValue) => {
+const getUserById = (id) => {
     return new Promise(((resolve, reject) => {
         User
-            .findOne({[searchKey]: searchValue})
+            .findOne({_id: id})
             .exec((err, role) => {
                 if (role) {
                     resolve(role);
@@ -46,4 +46,4 @@ module.exports.getUserInstance = getUserInstance;
 module.exports.createUser = createUser;
 module.exports.createUsers = createUsers;
 module.exports.getUsers = getUsers;
-module.exports.getUser = getUser;
+module.exports.getUserById = getUserById;
