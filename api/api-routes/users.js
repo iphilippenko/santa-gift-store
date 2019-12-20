@@ -13,7 +13,8 @@ const {
 router.get('/users', (req, res) => {
     getUsers()
         .then(users => {
-            res.status(ServiceError.STATUS.SUCCESS).send(users);
+            res.status(ServiceError.STATUS.SUCCESS)
+                .send(users);
         })
         .catch(err => {
             res
@@ -28,7 +29,8 @@ router.post('/users', (req, res) => {
     console.log(req.body);
     createUser(req.body)
         .then(user => {
-            res.status(ServiceError.STATUS.SUCCESS).send(user);
+            res.status(ServiceError.STATUS.SUCCESS)
+                .send(user);
         })
         .catch(err => {
             console.error(err);
@@ -42,7 +44,8 @@ router.post('/users', (req, res) => {
 router.get('/users/:id', (req, res) => {
     getUser('_id', req.params.id)
         .then(user => {
-            res.status(ServiceError.STATUS.SUCCESS).send(user);
+            res.status(ServiceError.STATUS.SUCCESS)
+                .send(user);
         })
         .catch(err => {
             res
@@ -56,7 +59,8 @@ router.get('/users/:id', (req, res) => {
 router.put('/users/:id', (req, res) => {
     updateUser(req.params.id, req.body)
         .then(user => {
-            res.status(ServiceError.STATUS.SUCCESS).send(user);
+            res.status(ServiceError.STATUS.SUCCESS)
+                .send(user);
         })
         .catch(err => {
             res
@@ -70,7 +74,8 @@ router.put('/users/:id', (req, res) => {
 router.delete('/users/:id', (req, res) => {
     deleteUser(req.params.id)
         .then(user => {
-            res.status(ServiceError.STATUS.SUCCESS).send(user);
+            res.status(ServiceError.STATUS.SUCCESS)
+                .send(user);
         })
         .catch(err => {
             res

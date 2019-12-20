@@ -6,7 +6,8 @@ const getRoleInstance = (roleObj) => {
 
 // create role
 const createRole = (role) => {
-    return getRoleInstance(role).save();
+    return getRoleInstance(role)
+        .save();
 };
 
 // create roles

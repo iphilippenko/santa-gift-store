@@ -1,4 +1,5 @@
-const dotenv = require('dotenv').config();
+const dotenv = require('dotenv')
+    .config();
 const mongoose = require('mongoose');
 const mongoConfig = require('../config/mongo');
 const roles = require('../constants/user-roles');
@@ -20,7 +21,10 @@ const disconnectDB = () => {
 const createDefaultRoles = (roles) => {
     createRoles(Object.values(roles)
         .map((roleName, index) => {
-            return {name: roleName, level: index};
+            return {
+                name: roleName,
+                level: index
+            };
         }))
         .then(() => {
             console.log('Roles saved!');

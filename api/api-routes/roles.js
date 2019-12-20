@@ -7,7 +7,8 @@ const ServiceError = require('../config/error');
 router.get('/roles', (req, res) => {
     getRoles()
         .then(roles => {
-            res.status(ServiceError.STATUS.SUCCESS).send(roles);
+            res.status(ServiceError.STATUS.SUCCESS)
+                .send(roles);
         })
         .catch(err => {
             res
@@ -21,7 +22,8 @@ router.get('/roles', (req, res) => {
 router.get('/roles/:id', (req, res) => {
     getRole('_id', req.params.id)
         .then(role => {
-            res.status(ServiceError.STATUS.SUCCESS).send(role);
+            res.status(ServiceError.STATUS.SUCCESS)
+                .send(role);
         })
         .catch(err => {
             res

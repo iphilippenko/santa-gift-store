@@ -17,7 +17,8 @@ const getUserInstance = (user) => {
 
 // create user
 const createUser = (user) => {
-    return getUserInstance(user).save();
+    return getUserInstance(user)
+        .save();
 };
 
 // create users

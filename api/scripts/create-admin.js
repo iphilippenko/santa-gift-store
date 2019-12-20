@@ -1,4 +1,5 @@
-const dotenv = require('dotenv').config();
+const dotenv = require('dotenv')
+    .config();
 const mongoose = require('mongoose');
 const mongoConfig = require('../config/mongo');
 const {createUser} = require('../services/users');
@@ -9,7 +10,8 @@ const ServiceError = require('../config/error');
 const connectDB = () => {
     mongoose.connect(mongoConfig.MONGODB_URI, mongoConfig.CONNECTION_OPTIONS)
         .then(() => {
-            createAdmin(adminConfig).finally(() => disconnectDB());
+            createAdmin(adminConfig)
+                .finally(() => disconnectDB());
         })
         .catch(err => console.error(err));
 };
