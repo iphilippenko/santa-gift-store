@@ -1,40 +1,86 @@
 const User = require('../models/user');
+const {Types} = require('mongoose');
+
+// convert role to ObjectId, delete undefined values
+const processUser = (user) => {
+    if (user.role) {
+        user.role = Types.ObjectId(user.role);
+    }
+    Object.keys(user)
+        .forEach(key => typeof user[key] === 'undefined' && delete user[key]);
+    return user;
+};
 
 const getUserInstance = (user) => {
-    Object.keys(user).forEach(key => typeof user[key] === 'undefined' && delete user[key]);
-    return new User(user);
+    return new User(processUser(user));
 };
 
-const createUser = (userInstance) => {
-    return userInstance.save();
+// create user
+const createUser = (user) => {
+    return getUserInstance(user).save();
 };
 
-const createUsers = (userInstances) => {
-    return Promise.all(userInstances.map(user => createUser(user)));
+// create users
+const createUsers = (users) => {
+    return Promise.all(users
+        .map(user =>
+            createUser(user)));
 };
 
+// get all users
 const getUsers = () => {
     return new Promise(((resolve, reject) => {
         User
             .find({})
-            .exec((err, roles) => {
+            .exec((err, users) => {
                 if (err) {
                     reject(err);
                 }
-                if (roles) {
-                    resolve(roles);
+                if (users) {
+                    resolve(users);
                 }
             });
     }))
 };
 
-const getUserById = (id) => {
+// get user by search key
+const getUser = (searchKey, searchValue) => {
     return new Promise(((resolve, reject) => {
         User
-            .findOne({_id: id})
-            .exec((err, role) => {
-                if (role) {
-                    resolve(role);
+            .findOne({[searchKey]: searchValue})
+            .exec((err, user) => {
+                if (user) {
+                    resolve(user);
+                } else {
+                    reject(err);
+                }
+            });
+    }))
+};
+
+// update user by is
+const updateUserById = (id, user) => {
+    return new Promise(((resolve, reject) => {
+        User
+            .findByIdAndUpdate(id, processUser(user), {new: true})
+            .exec((err, user) => {
+                if (user) {
+                    resolve(user);
+                } else {
+                    reject(err);
+                }
+            });
+    }))
+};
+
+// delete user by id
+const deleteUserById = (id) => {
+    return new Promise(((resolve, reject) => {
+        User
+            .findByIdAndDelete(id)
+            .exec((err, user) => {
+                if (user) {
+                    resolve(user);
                 } else {
                     reject(err);
                 }
@@ -46,4 +92,6 @@ module.exports.getUserInstance = getUserInstance;
 module.exports.createUser = createUser;
 module.exports.createUsers = createUsers;
 module.exports.getUsers = getUsers;
-module.exports.getUserById = getUserById;
+module.exports.getUser = getUser;
+module.exports.updateUser = updateUserById;
+module.exports.deleteUser = deleteUserById;

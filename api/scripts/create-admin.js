@@ -1,7 +1,7 @@
 const dotenv = require('dotenv').config();
 const mongoose = require('mongoose');
 const mongoConfig = require('../config/mongo');
-const {createUser, getUserInstance} = require('../services/users');
+const {createUser} = require('../services/users');
 const adminConfig = require('../config/admin-user');
 const {getRole} = require('../services/roles');
 const ServiceError = require('../config/error');
@@ -18,6 +18,7 @@ const disconnectDB = () => {
     mongoose.disconnect();
 };
 
+// fild role by name
 const findRole = async (roleName) => {
     let role;
     try {
@@ -32,9 +33,9 @@ const findRole = async (roleName) => {
 const createAdmin = async (user) => {
     let role = await findRole(user.role);
     if (role) {
-        user.role = mongoose.Types.ObjectId(role._id);
+        user.role = role._id;
         try {
-            await createUser(getUserInstance(user));
+            await createUser(user);
             console.log('User saved!');
         } catch (err) {
             console.log(`Cannot save user`);

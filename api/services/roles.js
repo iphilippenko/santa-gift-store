@@ -4,14 +4,19 @@ const getRoleInstance = (roleObj) => {
     return new Role(roleObj);
 };
 
-const createRole = (roleInstance) => {
-    return roleInstance.save();
+// create role
+const createRole = (role) => {
+    return getRoleInstance(role).save();
 };
 
-const createRoles = (roleInstances) => {
-    return Promise.all(roleInstances.map(role => createRole(role)));
+// create roles
+const createRoles = (roles) => {
+    return Promise.all(roles
+        .map(role =>
+            createRole(role)));
 };
 
+// get all roles
 const getRoles = () => {
     return new Promise(((resolve, reject) => {
         Role
@@ -27,6 +32,7 @@ const getRoles = () => {
     }))
 };
 
+// get role by search key
 const getRole = (searchKey, searchValue) => {
     return new Promise(((resolve, reject) => {
         Role

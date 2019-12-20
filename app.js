@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const compression = require('compression');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const router = require('./api/api-routes/router')();
@@ -17,6 +18,8 @@ app
     .use(express.static(distConfig.ADMIN_DIST))
     .use(cors())
     .use(compression())
+    .use(bodyParser.urlencoded({ extended: false }))
+    .use(bodyParser.json())
     .get('/*', (req, res, next) => {
         if (req.originalUrl.match(/\/api/g)) {
             next();

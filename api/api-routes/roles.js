@@ -18,7 +18,7 @@ router.get('/roles', (req, res) => {
         })
 });
 
-router.get('/role/:id', (req, res) => {
+router.get('/roles/:id', (req, res) => {
     getRole('_id', req.params.id)
         .then(role => {
             res.status(ServiceError.STATUS.SUCCESS).send(role);
@@ -33,4 +33,3 @@ router.get('/role/:id', (req, res) => {
 });
 
 module.exports = router;
-

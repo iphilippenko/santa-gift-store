@@ -2,13 +2,13 @@ const dotenv = require('dotenv').config();
 const mongoose = require('mongoose');
 const mongoConfig = require('../config/mongo');
 const roles = require('../constants/user-roles');
-const {getRoleInstance, createRoles} = require('../services/roles');
+const {createRoles} = require('../services/roles');
 const ServiceError = require('../config/error');
 
 const connectDB = () => {
     mongoose.connect(mongoConfig.MONGODB_URI, mongoConfig.CONNECTION_OPTIONS)
         .then(() => {
-            createDefaultRoles();
+            createDefaultRoles(roles);
         })
         .catch(err => console.error(err));
 };
@@ -17,9 +17,11 @@ const disconnectDB = () => {
     mongoose.disconnect();
 };
 
-const createDefaultRoles = () => {
+const createDefaultRoles = (roles) => {
     createRoles(Object.values(roles)
-        .map((roleName, index) => getRoleInstance({name: roleName, level: index})))
+        .map((roleName, index) => {
+            return {name: roleName, level: index};
+        }))
         .then(() => {
             console.log('Roles saved!');
             disconnectDB();
