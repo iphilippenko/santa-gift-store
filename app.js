@@ -6,6 +6,8 @@ const compression = require('compression');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 
 const router = require('./api/api-routes/router')();
 const mongoConfig = require('./api/config/mongo');
@@ -29,6 +31,7 @@ app
         }
     })
     .use('/api', router)
+    .use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
     .use((req, res) => res
         .status(ServiceError.STATUS.NOT_FOUND)
         .send(new ServiceError('not found',
