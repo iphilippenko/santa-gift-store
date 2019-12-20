@@ -33,6 +33,7 @@ const getUsers = () => {
     return new Promise(((resolve, reject) => {
         User
             .find({})
+            .populate('role')
             .exec((err, users) => {
                 if (err) {
                     reject(err);
@@ -49,6 +50,7 @@ const getUser = (searchKey, searchValue) => {
     return new Promise(((resolve, reject) => {
         User
             .findOne({[searchKey]: searchValue})
+            .populate('role')
             .exec((err, user) => {
                 if (user) {
                     resolve(user);
@@ -64,6 +66,7 @@ const updateUserById = (id, user) => {
     return new Promise(((resolve, reject) => {
         User
             .findByIdAndUpdate(id, processUser(user), {new: true})
+            .populate('role')
             .exec((err, user) => {
                 if (user) {
                     resolve(user);
@@ -79,6 +82,7 @@ const deleteUserById = (id) => {
     return new Promise(((resolve, reject) => {
         User
             .findByIdAndDelete(id)
+            .populate('role')
             .exec((err, user) => {
                 if (user) {
                     resolve(user);
