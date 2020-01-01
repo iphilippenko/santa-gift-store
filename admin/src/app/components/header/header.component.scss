@@ -1,0 +1,29 @@
+::ng-deep mat-toolbar.mat-toolbar.mat-primary {
+	height: 75px;
+    padding: 0 32px;
+	justify-content: center;
+	.toolbar-content {
+	}
+	button.toggle-sidenav-btn {
+		min-width: auto;
+		padding: 0 !important;
+	}
+	.logout {
+		padding: 0;
+		box-shadow: none;
+		border: none;
+		background: transparent;
+		cursor: pointer;
+		outline: none !important;
+		&-img {
+			height: 39px;
+			outline: none !important;
+		}
+	}
+	.username {
+		font-size: 16px;
+		line-height: 1.25;
+		letter-spacing: normal;
+		cursor: pointer;
+	}
+}

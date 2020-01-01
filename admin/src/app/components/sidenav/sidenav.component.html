@@ -1,0 +1,15 @@
+<mat-sidenav-container class="sidenav-container" fxLayout="row" fxFlexAlign="space-around center">
+    <mat-sidenav #drawer mode="side" opened="opened" role="navigation">
+        <mat-nav-list>
+            <a matLine="matLine"
+               *ngFor="let link of sidenavLinks"
+               [class.current-nav]="currentUrl.indexOf(link?.path) > -1"
+               mat-list-item="mat-list-item"
+               [routerLink]="link?.path"
+               (click)="toggleSidenav()">{{ link?.label }}</a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>

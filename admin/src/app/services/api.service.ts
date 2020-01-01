@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {environment} from '@environments/environment';
-import {HttpHeaders, HttpResponseBase} from "@angular/common/http";
-import {Observable, throwError} from "rxjs";
+import {HttpHeaders, HttpResponseBase} from '@angular/common/http';
+import {Observable, throwError} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -22,9 +22,9 @@ export class ApiService {
         } else {
             data['Content-Type'] = 'application/json';
         }
-        data['Access-Control-Allow-Methods'] =  'GET, POST, OPTIONS';
-        data['Access-Control-Expose-Headers'] =  'token-refresh';
-        data['Access-Control-Allow-Headers'] =  'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Custom-header, token-refresh';
+        data['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS';
+        data['Access-Control-Expose-Headers'] = 'token-refresh';
+        data['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Custom-header, token-refresh';
         const headers = new HttpHeaders(data);
 
         return {headers: headers};

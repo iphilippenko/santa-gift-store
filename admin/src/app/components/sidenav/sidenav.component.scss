@@ -1,0 +1,64 @@
+::ng-deep app-sidenav {
+	height: auto;
+	.mat-drawer-container {
+		background: #fff;
+		.mat-drawer-content {
+			width: 100%;
+			padding: 0 32px 0 18px;
+            margin-top: 43px;
+		}
+
+		.mat-tab-nav-bar, .mat-tab-header {
+			margin-top: 43px;
+		}
+		.mat-drawer-side {
+			border: none;
+			//margin: 43px 30px;
+			//box-shadow: 0 0 6px 0 rgba(48, 48, 48, 0.42);
+		}
+		.mat-drawer {
+			bottom: auto;
+		}
+	}
+	.sidenav-container {
+		//width: 95%;
+		height: 100%;
+		//align-items: center;
+		//padding: 43px 0 0 0;
+		border-radius: 4px;
+		margin: auto;
+		//box-shadow: 0 0 6px 0 rgba(48, 48, 48, 0.42);
+		mat-sidenav {
+			width: 200px;
+		}
+		.mat-drawer-inner-container {
+			width: 160px;
+			box-shadow: 0 0 6px 0 rgba(48, 48, 48, 0.42);
+			margin: 43px 0 43px 32px;
+		}
+		mat-nav-list.mat-list-base {
+			padding: 0;
+			border-radius: 4px;
+			background-color: #fafafa;
+			.mat-list-item {
+				height: 52px;
+				.mat-list-item-content {
+					padding-left: 10px;
+					padding-right: 3px;
+				}
+				.mat-list-text {
+					height: 100%;
+				}
+				.mat-line {
+					height: 100%;
+					display: flex;
+					justify-content: flex-start;
+					align-items: center;
+				}
+				&.current-nav {
+					background-color: #efefef;
+				}
+			}
+		}
+	}
+}

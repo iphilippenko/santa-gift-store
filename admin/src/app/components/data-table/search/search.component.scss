@@ -1,0 +1,16 @@
+::ng-deep app-search {
+	display: flex;
+	.search-wrapper {
+		width: 255px;
+		position: relative;
+		mat-icon {
+			position: absolute;
+			height: 16px;
+			width: 16px;
+			top: 50%;
+			left: 16px;
+			transform: translateY(-50%);
+		}
+	}
+}
+
