@@ -1,4 +1,4 @@
-const Role = require('../models/user-role');
+const Role = require('../models/user-role.model');
 
 const getRoleInstance = (roleObj) => {
     return new Role(roleObj);

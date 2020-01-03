@@ -1,10 +1,8 @@
 const mongoose = require('mongoose');
 const bcrypt = require('mongoose-bcrypt');
-const {validateEmail} = require('../validators/email-validator');
-const {validatePhone} = require("../validators/phone-validator");
-const {CODE} = require('../config/error');
+const {CODE} = require('../config/error.config');
 
-require('./user-role');
+require('./user-role.model');
 
 const userSchema = new mongoose.Schema({
         firstName: {
@@ -18,12 +16,12 @@ const userSchema = new mongoose.Schema({
             trim: true,
             required: true,
             unique: true,
-            validate: [validateEmail, CODE.INVALID_EMAIL]
+            match: ['/^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$/', CODE.INVALID_EMAIL]
         },
         phone: {
             type: String,
             trim: true,
-            validate: [validatePhone, CODE.INVALID_PHONE]
+            validate: ['/^\\+?3?8?(0\\d{9})$/', CODE.INVALID_PHONE]
         },
         role: {
             type: mongoose.Schema.Types.ObjectId,

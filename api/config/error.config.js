@@ -58,6 +58,7 @@ const errorCodes = {
     ERROR_EMPTY_EMAIL: 'error_empty_email_fields',
     ERROR_SERVER: 'error_server',
     ERROR_EMAIL_ALREADY_TAKEN: 'error_email_already_taken',
+    INVALID_BODY: 'invalid_body',
     INVALID_EMAIL: 'invalid_email',
     INVALID_PHONE: 'invalid_phone',
     INVALID_USER_NOT_FOUND: 'invalid_user_not_found',

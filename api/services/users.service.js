@@ -1,4 +1,4 @@
-const User = require('../models/user');
+const User = require('../models/user.model');
 const {Types} = require('mongoose');
 
 // convert role to ObjectId, delete undefined values

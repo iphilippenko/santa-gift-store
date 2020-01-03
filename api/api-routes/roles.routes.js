@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const {getRole, getRoles} = require('../services/roles');
-const ServiceError = require('../config/error');
+const {getRole, getRoles} = require('../services/roles.service');
+const ServiceError = require('../config/error.config');
 
 router.get('/roles', (req, res) => {
     getRoles()

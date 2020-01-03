@@ -1,11 +1,11 @@
 const dotenv = require('dotenv')
     .config();
 const mongoose = require('mongoose');
-const mongoConfig = require('../config/mongo');
-const {createUser} = require('../services/users');
-const adminConfig = require('../config/admin-user');
-const {getRole} = require('../services/roles');
-const ServiceError = require('../config/error');
+const mongoConfig = require('../config/mongo.config');
+const {createUser} = require('../services/users.service');
+const adminConfig = require('../config/admin-user.config');
+const {getRole} = require('../services/roles.service');
+const ServiceError = require('../config/error.config');
 
 const connectDB = () => {
     mongoose.connect(mongoConfig.MONGODB_URI, mongoConfig.CONNECTION_OPTIONS)

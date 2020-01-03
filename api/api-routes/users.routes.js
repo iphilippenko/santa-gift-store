@@ -1,14 +1,17 @@
 const express = require('express');
 const router = express.Router();
 
-const ServiceError = require('../config/error');
+const ServiceError = require('../config/error.config');
 const {
     getUsers,
     getUser,
     createUser,
     updateUser,
     deleteUser
-} = require('../services/users');
+} = require('../services/users.service');
+const validate = require('../middlewares/validation.middleware');
+const createValidator = require('../validators/user-validators/user-create.validator');
+const editValidator = require('../validators/user-validators/user-edit.validator');
 
 router.get('/users', (req, res) => {
     getUsers()
@@ -25,7 +28,7 @@ router.get('/users', (req, res) => {
         })
 });
 
-router.post('/users', (req, res) => {
+router.post('/users', validate(createValidator), (req, res) => {
     console.log(req.body);
     createUser(req.body)
         .then(user => {
@@ -56,7 +59,7 @@ router.get('/users/:id', (req, res) => {
         })
 });
 
-router.put('/users/:id', (req, res) => {
+router.put('/users/:id', validate(editValidator), (req, res) => {
     updateUser(req.params.id, req.body)
         .then(user => {
             res.status(ServiceError.STATUS.SUCCESS)

@@ -10,10 +10,10 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
 const router = require('./api/api-routes/router')();
-const mongoConfig = require('./api/config/mongo');
-const serverConfig = require('./api/config/server');
-const distConfig = require('./api/config/dist')(path, __dirname);
-const ServiceError = require('./api/config/error');
+const mongoConfig = require('./api/config/mongo.config');
+const serverConfig = require('./api/config/server.config');
+const distConfig = require('./api/config/dist.config')(path, __dirname);
+const ServiceError = require('./api/config/error.config');
 
 const app = express();
 
