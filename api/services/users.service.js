@@ -65,9 +65,12 @@ const getUser = (searchKey, searchValue) => {
 const updateUserById = (id, user) => {
     return new Promise(((resolve, reject) => {
         User
-            .findByIdAndUpdate(id, processUser(user), {new: true})
+            .findByIdAndUpdate(id, user, {new: true})
             .populate('role')
             .exec((err, user) => {
+                console.log('updateUserById');
+                console.log(err);
+                console.log(user);
                 if (user) {
                     resolve(user);
                 } else {

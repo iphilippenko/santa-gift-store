@@ -2,36 +2,21 @@ const express = require('express');
 const router = express.Router();
 
 const {getRole, getRoles} = require('../services/roles.service');
-const ServiceError = require('../config/error.config');
 
-router.get('/roles', (req, res) => {
+router.get('/roles', (req, res, next) => {
     getRoles()
         .then(roles => {
-            res.status(ServiceError.STATUS.SUCCESS)
-                .send(roles);
+            res.send(roles);
         })
-        .catch(err => {
-            res
-                .status(ServiceError.STATUS.INTERNAL_SERVER_ERROR)
-                .send(new ServiceError(err,
-                    ServiceError.STATUS.INTERNAL_SERVER_ERROR,
-                    ServiceError.CODE.ERROR_MONGODB_SAVING));
-        })
+        .catch(next)
 });
 
-router.get('/roles/:id', (req, res) => {
+router.get('/roles/:id', (req, res, next) => {
     getRole('_id', req.params.id)
         .then(role => {
-            res.status(ServiceError.STATUS.SUCCESS)
-                .send(role);
+            res.send(role);
         })
-        .catch(err => {
-            res
-                .status(ServiceError.STATUS.NOT_FOUND)
-                .send(new ServiceError(err,
-                    ServiceError.STATUS.NOT_FOUND,
-                    ServiceError.CODE.ERROR_NOT_FOUND));
-        })
+        .catch(next)
 });
 
 module.exports = router;

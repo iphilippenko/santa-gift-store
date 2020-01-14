@@ -1,4 +1,4 @@
-const ajv = require('ajv')();
+const ajv = require('ajv')({$data: true});
 require('ajv-keywords')(ajv);
 
 const schema = {
@@ -26,8 +26,8 @@ const schema = {
             'minLength': 6
         }
     },
-    required: ['email', 'role'],
-    additionalProperties: true
+    required: [],
+    additionalProperties: false
 };
 
 module.exports = ajv.compile(schema);

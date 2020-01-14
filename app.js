@@ -13,7 +13,6 @@ const router = require('./api/api-routes/router')();
 const mongoConfig = require('./api/config/mongo.config');
 const serverConfig = require('./api/config/server.config');
 const distConfig = require('./api/config/dist.config')(path, __dirname);
-const ServiceError = require('./api/config/error.config');
 
 const app = express();
 
@@ -32,11 +31,15 @@ app
     })
     .use('/api', router)
     .use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
-    .use((req, res) => res
-        .status(ServiceError.STATUS.NOT_FOUND)
-        .send(new ServiceError('not found',
-            ServiceError.STATUS.NOT_FOUND,
-            ServiceError.CODE.ERROR_NOT_FOUND)));
+    .use((error, req, res, next) => {
+        if (error.status) {
+            console.log(error);
+            res.status(error.status).json(error);
+        } else {
+            res.status(500).send(new Error('Uncaught exception!'));
+        }
+        next()
+    });
 
 app.listen(serverConfig.PORT, () => {
     connectDb();

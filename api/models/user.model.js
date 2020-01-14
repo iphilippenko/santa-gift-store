@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const bcrypt = require('mongoose-bcrypt');
-const {CODE} = require('../config/error.config');
 
 require('./user-role.model');
 
@@ -16,12 +15,12 @@ const userSchema = new mongoose.Schema({
             trim: true,
             required: true,
             unique: true,
-            match: ['/^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$/', CODE.INVALID_EMAIL]
+            match: ['/^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$/', 'invalid_email']
         },
         phone: {
             type: String,
             trim: true,
-            validate: ['/^\\+?3?8?(0\\d{9})$/', CODE.INVALID_PHONE]
+            match: ['/^\\+?3?8?(0\\d{9})$/', 'invalid_phone']
         },
         role: {
             type: mongoose.Schema.Types.ObjectId,
@@ -32,11 +31,11 @@ const userSchema = new mongoose.Schema({
             type: String,
             select: false,
             minlength: [6, 'Too short password'],
-            bcrypt: true,
+            // bcrypt: true,
             trim: true
         }
     },
     {timestamps: true});
 
-userSchema.plugin(bcrypt);
+// userSchema.plugin(bcrypt);
 module.exports = mongoose.model('User', userSchema);

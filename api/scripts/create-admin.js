@@ -1,11 +1,9 @@
-const dotenv = require('dotenv')
-    .config();
+require('dotenv').config();
 const mongoose = require('mongoose');
 const mongoConfig = require('../config/mongo.config');
 const {createUser} = require('../services/users.service');
 const adminConfig = require('../config/admin-user.config');
 const {getRole} = require('../services/roles.service');
-const ServiceError = require('../config/error.config');
 
 const connectDB = () => {
     mongoose.connect(mongoConfig.MONGODB_URI, mongoConfig.CONNECTION_OPTIONS)
@@ -41,9 +39,7 @@ const createAdmin = async (user) => {
             console.log('User saved!');
         } catch (err) {
             console.log(`Cannot save user`);
-            console.error(new ServiceError(err,
-                ServiceError.STATUS.INTERNAL_SERVER_ERROR,
-                ServiceError.CODE.ERROR_MONGODB_SAVING));
+            console.error(err);
         }
     }
 };

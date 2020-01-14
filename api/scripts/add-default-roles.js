@@ -1,10 +1,8 @@
-const dotenv = require('dotenv')
-    .config();
+require('dotenv').config();
 const mongoose = require('mongoose');
 const mongoConfig = require('../config/mongo.config');
 const roles = require('../constants/user-roles');
 const {createRoles} = require('../services/roles.service');
-const ServiceError = require('../config/error.config');
 
 const connectDB = () => {
     mongoose.connect(mongoConfig.MONGODB_URI, mongoConfig.CONNECTION_OPTIONS)
@@ -32,9 +30,7 @@ const createDefaultRoles = (roles) => {
         })
         .catch(err => {
             console.error('Roles saving error!');
-            console.error(new ServiceError(err,
-                ServiceError.STATUS.INTERNAL_SERVER_ERROR,
-                ServiceError.CODE.ERROR_MONGODB_SAVING));
+            console.error(err);
             disconnectDB();
         });
 };

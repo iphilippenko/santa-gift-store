@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-const ServiceError = require('../config/error.config');
 const {
     getUsers,
     getUser,
@@ -13,80 +12,41 @@ const validate = require('../middlewares/validation.middleware');
 const createValidator = require('../validators/user-validators/user-create.validator');
 const editValidator = require('../validators/user-validators/user-edit.validator');
 
-router.get('/users', (req, res) => {
+router.get('/users', (req, res, next) => {
     getUsers()
-        .then(users => {
-            res.status(ServiceError.STATUS.SUCCESS)
-                .send(users);
-        })
-        .catch(err => {
-            res
-                .status(ServiceError.STATUS.INTERNAL_SERVER_ERROR)
-                .send(new ServiceError(err,
-                    ServiceError.STATUS.INTERNAL_SERVER_ERROR,
-                    ServiceError.CODE.ERROR_MONGODB_SAVING));
-        })
+        .then((users) => res.send(users))
+        .catch(next)
 });
 
-router.post('/users', validate(createValidator), (req, res) => {
+router.post('/users', validate(createValidator), (req, res, next) => {
     console.log(req.body);
     createUser(req.body)
-        .then(user => {
-            res.status(ServiceError.STATUS.SUCCESS)
-                .send(user);
-        })
-        .catch(err => {
-            console.error(err);
-            res
-                .status(ServiceError.STATUS.INTERNAL_SERVER_ERROR)
-                .send(new ServiceError(err,
-                    ServiceError.STATUS.INTERNAL_SERVER_ERROR));
-        })
+        .then((user) => res.send(user))
+        .catch(next)
 });
 
-router.get('/users/:id', (req, res) => {
+router.get('/users/:id', (req, res, next) => {
     getUser('_id', req.params.id)
-        .then(user => {
-            res.status(ServiceError.STATUS.SUCCESS)
-                .send(user);
-        })
-        .catch(err => {
-            res
-                .status(ServiceError.STATUS.NOT_FOUND)
-                .send(new ServiceError(err,
-                    ServiceError.STATUS.NOT_FOUND,
-                    ServiceError.CODE.ERROR_NOT_FOUND));
-        })
+        .then((user) => res.send(user))
+        .catch(next)
 });
-
-router.put('/users/:id', validate(editValidator), (req, res) => {
+//
+router.put('/users/:id', validate(editValidator), (req, res, next) => {
+    console.log(req.params.id);
+    console.log(req.body);
     updateUser(req.params.id, req.body)
-        .then(user => {
-            res.status(ServiceError.STATUS.SUCCESS)
-                .send(user);
+        .then((user) => {
+            console.log('USER THEN');
+            console.log(user);
+            res.send(user)
         })
-        .catch(err => {
-            res
-                .status(ServiceError.STATUS.NOT_FOUND)
-                .send(new ServiceError(err,
-                    ServiceError.STATUS.NOT_FOUND,
-                    ServiceError.CODE.ERROR_NOT_FOUND));
-        })
+        .catch(next)
 });
 
-router.delete('/users/:id', (req, res) => {
+router.delete('/users/:id', (req, res, next) => {
     deleteUser(req.params.id)
-        .then(user => {
-            res.status(ServiceError.STATUS.SUCCESS)
-                .send(user);
-        })
-        .catch(err => {
-            res
-                .status(ServiceError.STATUS.NOT_FOUND)
-                .send(new ServiceError(err,
-                    ServiceError.STATUS.NOT_FOUND,
-                    ServiceError.CODE.ERROR_NOT_FOUND));
-        })
+        .then((user) => res.send(user))
+        .catch(next)
 });
 
 module.exports = router;
