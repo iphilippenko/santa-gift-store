@@ -1,0 +1,25 @@
+<div fxFlex="fxFlex" fxLayoutAlign="space-between center" fxLayoutAlign.sm="center start"
+     fxLayoutAlign.xs="center start" fxLayout.sm="column" fxLayout.xs="column" fxLayout.md="row" fxLayoutGap="10px">
+    <!--<app-search (searchValueChange)="filterValue = $event;" [filterValue]="filterValue"></app-search>-->
+    <div class="action-buttons" fxLayout.sm="column" fxLayout.xs="column">
+        <button mat-button="mat-button" flex mat-raised-button="mat-raised-button"
+                *ngIf="createBtnName && createBtnName.length"
+                (click)="create.emit()">{{createBtnName}}</button>
+        <button mat-button="mat-button" flex mat-raised-button="mat-raised-button"
+                *ngIf="exportDataBtnName && exportDataBtnName.length"
+                [disabled]="!tableData.length"
+                (click)="exportData.emit()">{{exportDataBtnName}}</button>
+    </div>
+</div>
+<app-table *ngIf="tableData.length || tableHeaders.length"
+           [tableData]="tableData"
+           [itemsLength]="itemsLength"
+           [tableHeaders]="tableHeaders"
+           fxFlexOffset="30px"
+           [filterValue]="filterValue"
+           (retrieveDataChanges)="retrieveDataChanges.emit($event)"
+           [actionButtons]="actionButtons"
+           (edit)="edit.emit($event)"
+           (delete)="delete.emit($event)"
+           (view)="view.emit($event)"
+           (columnSearch)="filterValue = '';"></app-table>

@@ -23,13 +23,13 @@ describe('AppComponent', () => {
     it(`should have as title 'admin'`, () => {
         const fixture = TestBed.createComponent(AppComponent);
         const app = fixture.debugElement.componentInstance;
-        expect(app.title).toEqual('admin');
+        expect(app.title).toEqual('dashboard');
     });
 
     it('should render title', () => {
         const fixture = TestBed.createComponent(AppComponent);
         fixture.detectChanges();
         const compiled = fixture.debugElement.nativeElement;
-        expect(compiled.querySelector('.content span').textContent).toContain('admin app is running!');
+        expect(compiled.querySelector('.content span').textContent).toContain('dashboard app is running!');
     });
 });

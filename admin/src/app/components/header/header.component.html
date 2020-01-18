@@ -1,0 +1,24 @@
+<mat-toolbar color="primary">
+    <div class="toolbar-content" fxFlex="fxFlex" fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="right-side" fxLayout="row" fxLayoutAlign="start center">
+            <button class="toggle-sidenav-btn" fxHide.lg fxHide.md fxHide.sm
+                    type="button" aria-label="Toggle sidenav" mat-button mat-icon-button
+                    (click)="navOpen()">
+                <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+            </button>
+            <h1>Santa Store</h1>
+        </div>
+        <div class="left-side" fxLayout="row" fxLayoutAlign="start center">
+            <p class="username">{{user?.firstName}} {{user?.lastName}}</p>
+            <button mat-button class="logout" fxFlexOffset="11px" fxLayoutAlign="center center" (click)="logout()">
+                Log out
+            </button>
+        </div>
+    </div>
+</mat-toolbar>
+<mat-progress-bar
+    *ngIf="progressBarService.visible | async"
+    class="example-margin"
+    color="accent"
+    mode="indeterminate">
+</mat-progress-bar>

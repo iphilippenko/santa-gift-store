@@ -1,1 +1,10 @@
-<p>users.page works!</p>
+<app-data-table [tableData]="users"
+                createBtnName="Create User"
+                [footerSearch]="false"
+                [paginate]="false"
+                [actionButtons]="actionButtons"
+                [tableHeaders]="tableHeaders"
+                (create)="updateUser()"
+                (edit)="updateUser($event)"
+                (delete)="deleteUser($event)">
+</app-data-table>

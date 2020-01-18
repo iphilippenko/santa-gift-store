@@ -1,0 +1,51 @@
+<div class="table-wrapper">
+    <mat-table [dataSource]="dataSource" matSort matSortDisableClear>
+        <!-- matSortActive="created", matSortDisableClear, matSortDirection="desc"-->
+        <!-- Define header/rows/footer cells-->
+        <ng-container *ngFor="let header of tableHeaders"
+                      [matColumnDef]="header['sortName'] ? header['sortName'] : header['selector']">
+            <p>{{header['sortName'] ? header['sortName'] : header['selector']}}</p>
+            <mat-header-cell *matHeaderCellDef mat-sort-header
+                             [disabled]="header['selector'] === 'actions' "
+                             [class.actions-cell]="header['selector'] === 'actions'"> {{header['name']}}</mat-header-cell>
+            <mat-cell *matCellDef="let row" [class.actions-cell]="header['selector'] === 'actions'">
+                <!-- Inner cell content-->
+                <ng-template [ngIf]="header['selector'] !== 'actions'">
+                    {{header['selector'] !== 'updatedAt' && header['selector'] !== 'createdAt' ?
+                    resolveValue((header['selector']), row) :
+                    row[header['selector']] | date : 'short'}}
+                </ng-template>
+                <ng-template [ngIf]="header['selector'] === 'actions'">
+                    <button mat-icon-button *ngIf="actionButtons.includes('edit')">
+                        <mat-icon class="edit-icon" [svgIcon]="iconsList[1]"
+                                  (click)="edit.emit(row)"></mat-icon>
+                    </button>
+                    <button mat-icon-button *ngIf="actionButtons.includes('delete')">
+                        <mat-icon [svgIcon]="iconsList[2]" (click)="delete.emit(row['_id'] || row['id'])"></mat-icon>
+                    </button>
+                    <button mat-icon-button *ngIf="actionButtons.includes('view')">
+                        <mat-icon [svgIcon]="iconsList[4]" (click)="view.emit(row['_id'] || row['id'])"></mat-icon>
+                    </button>
+                </ng-template>
+            </mat-cell>
+            <mat-footer-cell *matFooterCellDef [class.actions-cell]="header['selector'] === 'actions'">
+                <mat-icon svgIcon="search_icon"
+                          *ngIf="filteredColumns[(header['sortName'] ? header['sortName'] : header['selector'])] || filteredColumns[(header['sortName'] ? header['sortName'] : header['selector'])] === ''"></mat-icon>
+                <input class="footer-input"
+                       *ngIf="filteredColumns[(header['sortName'] ? header['sortName'] : header['selector'])] || filteredColumns[(header['sortName'] ? header['sortName'] : header['selector'])] === ''"
+                       [(ngModel)]="filteredColumns[(header['sortName'] ? header['sortName'] : header['selector'])]"
+                       (ngModelChange)="applyFilterByCol($event)"/>
+            </mat-footer-cell>
+        </ng-container>
+        <!-- Table header-->
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <!-- Table rows-->
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        <!-- Table footer-->
+        <ng-template [ngIf]="footerSearch">
+            <mat-footer-row *matFooterRowDef="displayedColumns"></mat-footer-row>
+        </ng-template>
+
+    </mat-table>
+    <mat-paginator *ngIf="paginate" [length]="itemsLength" [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5"></mat-paginator>
+</div>

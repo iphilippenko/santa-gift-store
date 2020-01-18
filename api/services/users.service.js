@@ -7,7 +7,7 @@ const processUser = (user) => {
         user.role = Types.ObjectId(user.role);
     }
     Object.keys(user)
-        .forEach(key => typeof user[key] === 'undefined' && delete user[key]);
+        .forEach(key => (typeof user[key] === 'undefined' || user[key] === null) && delete user[key]);
     return user;
 };
 

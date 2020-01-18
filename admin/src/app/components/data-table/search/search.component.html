@@ -1,0 +1,5 @@
+<div class="search-wrapper">
+    <mat-icon svgIcon="search_icon"></mat-icon>
+    <input class="search-input" placeholder="Search" [(ngModel)]="filterValue"
+           (ngModelChange)="searchValueChange.emit($event)"/>
+</div>

@@ -1,0 +1,180 @@
+mat-table {
+	border-radius: 4px;
+	box-shadow: 0 0 8px 0 rgba(48, 48, 48, 0.42);
+	background-color: #fafafa;
+
+	mat-footer-row, mat-header-row, mat-row {
+		border-bottom-color: #c4c4c4;
+	}
+
+	mat-header-row {
+		min-height: 60px;
+		border-radius: 5px 5px 0 0;
+	}
+
+	mat-footer-row, mat-row {
+		min-height: 58px;
+	}
+
+	mat-row:last-child, mat-footer-row {
+		border-bottom-width: 0;
+		border-radius: 0 0 5px 5px;
+	}
+
+	mat-cell {
+		word-break: break-all;
+	}
+
+	.mat-header-cell,
+	.mat-cell {
+		font-size: 16px;
+		color: #000;
+		font-weight: 400;
+		justify-content: center;
+	}
+
+	mat-cell:first-of-type,
+	mat-header-cell:first-of-type {
+		padding-left: 27px;
+	}
+
+	mat-cell:last-of-type,
+	mat-header-cell:last-of-type {
+		padding-right: 18px;
+	}
+
+	.actions-cell {
+		max-width: 100px;
+		box-sizing: border-box;
+		::ng-deep .mat-sort-header-arrow {
+			opacity: 0 !important;
+		}
+	}
+
+	mat-icon {
+		height: 22px;
+		&.edit-icon {
+			height: 23px;
+		}
+	}
+
+	.mat-footer-cell {
+		position: relative;
+		overflow: visible;
+		mat-icon {
+			width: 15px;
+			height: 15px;
+			position: absolute;
+			top: 50%;
+			left: 8px;
+			transform: translateY(-50%);
+		}
+		&:first-child {
+			mat-icon {
+				left: 32px;
+			}
+		}
+	}
+
+	input.footer-input {
+		width: 90%;
+		padding-left: 26px;
+	}
+}
+
+::ng-deep mat-header-cell .mat-sort-header-container {
+	//display: flex;
+	//cursor: pointer;
+	//align-items: flex-start;
+	//flex-direction: column-reverse;
+}
+
+::ng-deep .mat-paginator {
+	margin-top: 17px;
+	.mat-paginator-outer-container {
+		width: 100%;
+		.mat-paginator-container {
+			padding: 0;
+			justify-content: space-between;
+			font-size: 14px;
+			.mat-paginator-page-size {
+				color: #000;
+				.mat-select-trigger {
+					color: #000;
+					font-size: 14px;
+				}
+				.mat-select-arrow {
+					color: #000;
+				}
+			}
+			.mat-paginator-range-label {
+				color: #808080;
+				margin-right: 13px;
+			}
+		}
+	}
+}
+
+.mat-form-field {
+	font-size: 16px;
+	width: 100%;
+}
+
+//::ng-deep .mat-sort-header-arrow {
+//	margin: 0 0 3px 0 !important;
+//	min-width: 10px;
+//	min-height: 12px;
+//	opacity: 1 !important;
+//	transform: translateY(0%) !important;
+//	transition: none !important;
+//	animation: none !important;
+//
+//	// Hide default arrow stem
+//	.mat-sort-header-stem {
+//		display: none !important;
+//	}
+//	.mat-sort-header-indicator {
+//		min-width: 10px;
+//		min-height: 12px;
+//		max-height: 12px;
+//		opacity: 1 !important;
+//		transform: translateY(0px) !important;
+//		background: url("../../../../assets/img/svg/arrors_up_down_icon.svg") no-repeat;
+//		background-size: contain;
+//		transition: none !important;
+//		animation: none !important;
+//
+//		// Hide default arrow as its composed of left, right and middle
+//		.mat-sort-header-pointer-left, .mat-sort-header-pointer-right, .mat-sort-header-pointer-middle  {
+//			display: none;
+//		}
+//
+//		//&::before {
+//		//	content: url("../../../../assets/img/svg/arrors_up_down_icon.svg");
+//		//	width: 10px;
+//		//	height: 15px;
+//		//}
+//	}
+//}
+//
+//// My custom ascending arrow
+//[aria-sort="ascending"] {
+//	::ng-deep .mat-sort-header-arrow {
+//		.mat-sort-header-indicator {
+//			&::before {
+//				//top: -1.6em;
+//			}
+//		}
+//	}
+//}
+//
+//// My custom descending arrow
+//[aria-sort="descending"] {
+//	::ng-deep .mat-sort-header-arrow {
+//		.mat-sort-header-indicator {
+//			&::before {
+//				//top: -2.4em;;
+//			}
+//		}
+//	}
+//}

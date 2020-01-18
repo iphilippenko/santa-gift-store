@@ -1,5 +1,5 @@
 module.exports = {
-    'BIG_FAT_ADMIN': 'admin',
+    'BIG_FAT_ADMIN': 'dashboard',
     'MANAGER': 'manager',
     'USER': 'user'
 };

@@ -1,0 +1,11 @@
+::ng-deep app-data-table {
+	display: flex;
+	flex-direction: column;
+
+	.action-buttons {
+        margin-left: auto;
+		button:not(:last-child) {
+			margin-right: 10px;
+		}
+	}
+}

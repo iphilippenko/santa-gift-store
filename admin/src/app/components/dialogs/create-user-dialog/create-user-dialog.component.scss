@@ -1,0 +1,35 @@
+::ng-deep app-create-user-dialog {
+    min-width: 28vw;
+
+    .mat-toolbar {
+        flex: 1 0 auto;
+        min-height: initial;
+        img {
+            cursor: pointer;
+            object-fit: cover;
+        }
+    }
+
+    .toolbar-bottom {
+        height: auto;
+    }
+
+    .mat-dialog-actions {
+        margin: 0;
+        padding: 0 20px;
+    }
+
+    .mat-dialog-content {
+        margin: 0;
+        padding: 0 20px;
+    }
+
+    .dialog-content-wrapper {
+        max-height: 95vh;
+        display: flex;
+        flex-direction: column;
+        input:read-only {
+            color: rgba(0, 0, 0, 0.38);
+        }
+    }
+}
