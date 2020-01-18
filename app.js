@@ -13,15 +13,18 @@ const router = require('./api/api-routes/router')();
 const mongoConfig = require('./api/config/mongo.config');
 const serverConfig = require('./api/config/server.config');
 const distConfig = require('./api/config/dist.config')(path, __dirname);
+const passport = require('passport')
 
 const app = express();
 
 app
-    .use(express.static(distConfig.ADMIN_DIST))
     .use(cors())
     .use(compression())
-    .use(bodyParser.urlencoded({extended: false}))
+    .use(bodyParser.urlencoded({extended: true}))
     .use(bodyParser.json())
+    .use(passport.initialize({}))
+    .use(passport.session({}))
+    .use(express.static(distConfig.ADMIN_DIST))
     .get('/*', (req, res, next) => {
         if (req.originalUrl.match(/\/api/g)) {
             next();

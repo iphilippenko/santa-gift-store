@@ -30,7 +30,7 @@ router.get('/users/:id', (req, res, next) => {
         .then((user) => res.send(user))
         .catch(next)
 });
-//
+
 router.put('/users/:id', validate(editValidator), (req, res, next) => {
     console.log(req.params.id);
     console.log(req.body);
