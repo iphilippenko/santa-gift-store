@@ -13,7 +13,7 @@ const router = require('./api/api-routes/router')();
 const mongoConfig = require('./api/config/mongo.config');
 const serverConfig = require('./api/config/server.config');
 const distConfig = require('./api/config/dist.config')(path, __dirname);
-const passport = require('passport')
+const passport = require('passport');
 
 const app = express();
 

@@ -46,10 +46,11 @@ const getUsers = () => {
 };
 
 // get user by search key
-const getUser = (searchKey, searchValue) => {
+const getUser = (searchKey, searchValue, selectPassword = false) => {
     return new Promise(((resolve, reject) => {
         User
             .findOne({[searchKey]: searchValue})
+            .select(selectPassword ? 'password' : '')
             .populate('role')
             .exec((err, user) => {
                 if (user) {

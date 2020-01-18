@@ -10,21 +10,27 @@ const {
 passport.use('local-login',
     new LocalStrategy({
         usernameField: 'email',
-        passwordField: 'firstName',
+        passwordField: 'password',
         session: false,
         passReqToCallback: true
     }, (req, username, password, done) => {
-        console.log(req);
         console.log(username, password);
-        // getUser('email', username)
-        //     .then(user => {
-        //         console.log(user);
-        //         if (!user) {
-        //             return done(new HttpError('User not found', 401), false);
-        //         }
-        //         return done(null, user);
-        //     })
-        //     .catch(done);
+        getUser('email', username, true)
+            .then(user => {
+                if (!user) {
+                    return done(new HttpError('User not found', 401), false);
+                }
+                // TODO: crypt passwords
+
+                if (user.password !== password) {
+                    console.log('pass invalid');
+                    return done(new HttpError('Password not valid', 401), false);
+                }
+                return done(null, user);
+            })
+            .catch(() => {
+                return done(new HttpError('User not found', 401), false)
+            });
     }));
 
 
