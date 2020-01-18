@@ -1,13 +1,18 @@
 const User = require('../models/user.model');
+const {getRoles} = require("./roles.service");
 const {Types} = require('mongoose');
 
+const usersCsvValidator = require('../validators/user-validators/users-csv.validator');
+const {InvalidRequestError} = require("../middlewares/validation.middleware");
+
 // convert role to ObjectId, delete undefined values
-const processUser = (user) => {
-    if (user.role) {
-        user.role = Types.ObjectId(user.role);
-    }
+const processUser = (user, removeEmpty = false) => {
+    console.log(user);
     Object.keys(user)
-        .forEach(key => (typeof user[key] === 'undefined' || user[key] === null) && delete user[key]);
+        .forEach(key =>
+            (typeof user[key] === 'undefined' || user[key] === null ||
+                (removeEmpty && typeof user[key] === 'string' && !user[key].length))
+            && delete user[key]);
     return user;
 };
 
@@ -50,7 +55,9 @@ const getUser = (searchKey, searchValue, selectPassword = false) => {
     return new Promise(((resolve, reject) => {
         User
             .findOne({[searchKey]: searchValue})
-            .select(selectPassword ? 'password' : '')
+            .select(selectPassword ?
+                'password' :
+                '')
             .populate('role')
             .exec((err, user) => {
                 if (user) {
@@ -69,9 +76,7 @@ const updateUserById = (id, user) => {
             .findByIdAndUpdate(id, user, {new: true})
             .populate('role')
             .exec((err, user) => {
-                console.log('updateUserById');
-                console.log(err);
-                console.log(user);
+
                 if (user) {
                     resolve(user);
                 } else {
@@ -97,6 +102,39 @@ const deleteUserById = (id) => {
     }))
 };
 
+const saveUsers = (users) => {
+    return new Promise(async (res, rej) => {
+        const roles = await getRoles();
+        // remove empty strings, find role
+        let usersToSave = users.map(user => {
+            return processUser({
+                ...user,
+                role: roles.find(role => role.name === user.role)
+                    ._id
+                    .toString()
+            }, true);
+        });
+        if (usersCsvValidator.errors) {
+            rej(new InvalidRequestError(usersCsvValidator.errors));
+        } else {
+            res(Promise.all([...usersToSave.map(user => createOrUpdateUser(user))]));
+        }
+    });
+
+};
+
+const createOrUpdateUser = async (user) => {
+    try {
+        let existingUser = await getUser('email', user.email);
+        if (existingUser && existingUser._id) {
+            return updateUserById(existingUser._id, user);
+        }
+    } catch (err) {
+        return createUser(user);
+    }
+
+};
+
 module.exports.getUserInstance = getUserInstance;
 module.exports.createUser = createUser;
 module.exports.createUsers = createUsers;
@@ -104,3 +142,4 @@ module.exports.getUsers = getUsers;
 module.exports.getUser = getUser;
 module.exports.updateUser = updateUserById;
 module.exports.deleteUser = deleteUserById;
+module.exports.saveUsers = saveUsers;

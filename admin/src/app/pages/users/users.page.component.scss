@@ -1,0 +1,11 @@
+.file-upload {
+    display: inline-block;
+    position: relative;
+    &__input {
+        visibility: hidden;
+        position: absolute;
+        height: 0;
+        padding: 0;
+        border: 0;
+    }
+}

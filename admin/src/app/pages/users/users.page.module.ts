@@ -4,6 +4,7 @@ import {UsersPage} from '@pages/users/users.page.component';
 import {UsersRoutingModule} from '@pages/users/users-routing.module';
 import {DataTableModule} from '@components/data-table/data-table.module';
 import {CreateUserDialogModule} from '@components/dialogs/create-user-dialog/create-user-dialog.module';
+import {MatSnackBarModule} from '@angular/material';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import {CreateUserDialogModule} from '@components/dialogs/create-user-dialog/cre
         CommonModule,
         UsersRoutingModule,
         DataTableModule,
-        CreateUserDialogModule
+        CreateUserDialogModule,
+        MatSnackBarModule
     ],
     exports: [
         UsersPage

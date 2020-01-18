@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {UserService} from '@services/user-services/user.service';
 import {Subscription} from 'rxjs';
 import {TableHeader} from '@interfaces/table.interface';
@@ -6,9 +6,10 @@ import {User} from '@interfaces/user.interface';
 import {ConfirmDialogsService} from '@services/dialogs-services/confirm-dialogs.service';
 import {CreateUserDialogComponent} from '@components/dialogs/create-user-dialog/create-user-dialog.component';
 import {FormGroup} from '@angular/forms';
-import {MatDialog} from '@angular/material';
+import {MatDialog, MatSnackBar} from '@angular/material';
 import {SidenavService} from '@services/sidenav-services/sidenav.service';
 import {ProgressBarService} from '@services/progress-bar.service';
+import {FileUploadService} from '@services/file-upload-services/file-upload.service';
 
 @Component({
     selector: 'app-users.page',
@@ -45,12 +46,15 @@ export class UsersPage implements OnInit, OnDestroy {
             selector: 'actions',
             name: 'Actions'
         }];
+    @ViewChild('csvInput', {static: false}) csvInput;
 
     constructor(
         private matDialog: MatDialog,
         private userService: UserService,
         private confirmDialog: ConfirmDialogsService,
-        public progressBarService: ProgressBarService) {
+        public progressBarService: ProgressBarService,
+        private fileService: FileUploadService,
+        private _snackBar: MatSnackBar) {
     }
 
     ngOnInit() {
@@ -142,6 +146,30 @@ export class UsersPage implements OnInit, OnDestroy {
                     }
                 )
         );
+    }
+
+    processFile(): void {
+        const fileElem = this.csvInput.nativeElement;
+
+        if (fileElem.files && fileElem.files.length) {
+            this.progressBarService.show();
+            const formData = new FormData();
+            formData.append('file', fileElem.files[fileElem.files.length - 1]);
+            this.subscriptions.push(
+                this.fileService.csvFileUpload(formData).subscribe(
+                    data => {
+                        this.csvInput.nativeElement.value = '';
+                        this.getUsers();
+                        this._snackBar.open('Success', null, {duration: 2000});
+                    }, err => {
+                        this._snackBar.open(err, null, {duration: 5000});
+                        this.progressBarService.hide();
+                    })
+            );
+        }
+    }
+    getFile(): void {
+        this.csvInput.nativeElement.click();
     }
 
 }

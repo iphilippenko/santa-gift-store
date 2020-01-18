@@ -15,12 +15,12 @@ const userSchema = new mongoose.Schema({
             trim: true,
             required: true,
             unique: true,
-            match: ['/^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$/', 'invalid_email']
+            match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'invalid_email']
         },
         phone: {
             type: String,
             trim: true,
-            match: ['/^\\+?3?8?(0\\d{9})$/', 'invalid_phone']
+            match: [/^\\+?3?8?(0\\d{9})$/, 'invalid_phone']
         },
         role: {
             type: mongoose.Schema.Types.ObjectId,
@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema({
         password: {
             type: String,
             select: false,
-            minlength: [6, 'Too short password'],
+            minlength: [2, 'Too short password'],
             // bcrypt: true,
             trim: true
         }

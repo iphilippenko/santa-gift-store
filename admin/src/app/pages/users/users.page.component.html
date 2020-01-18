@@ -1,3 +1,8 @@
+<div class="file-upload">
+    <input type="file" class="file-upload__input" #csvInput (change)='processFile()' accept=".csv">
+    <button class="primary upload" (click)="getFile()">Upload csv</button>
+</div>
+
 <app-data-table [tableData]="users"
                 createBtnName="Create User"
                 [footerSearch]="false"

@@ -12,7 +12,7 @@ const schema = {
         },
         email: {
             'type': 'string',
-            'pattern': '^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$'
+            'pattern': '^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$'
         },
         phone: {
             'type': 'string',
@@ -23,7 +23,7 @@ const schema = {
         },
         password: {
             'type': 'string',
-            'minLength': 6
+            'minLength': 2
         }
     },
     required: [],

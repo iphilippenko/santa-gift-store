@@ -12,7 +12,7 @@ class InvalidRequestError extends HttpError {
             status: this.status,
             message: this.message,
             name: this.name,
-            errors: this.errors.map(error => error.message)
+            errors: this.errors.map(error => `${error.dataPath} ${error.message}`)
         }
     }
 }
@@ -32,3 +32,4 @@ let validate = (validator, ...args) => (req, res, next) => {
 };
 
 module.exports = validate;
+module.exports.InvalidRequestError = InvalidRequestError;
