@@ -1,9 +1,12 @@
 const User = require('../models/user.model');
 const {getRoles} = require("./roles.service");
-const {Types} = require('mongoose');
 
 const usersCsvValidator = require('../validators/user-validators/users-csv.validator');
 const {InvalidRequestError} = require("../middlewares/validation.middleware");
+
+const HttpError = require('../middlewares/http-error.middleware');
+
+const userRoles = require('../constants/user-roles');
 
 // convert role to ObjectId, delete undefined values
 const processUser = (user, removeEmpty = false) => {
@@ -11,8 +14,8 @@ const processUser = (user, removeEmpty = false) => {
     Object.keys(user)
         .forEach(key =>
             (typeof user[key] === 'undefined' || user[key] === null ||
-                (removeEmpty && typeof user[key] === 'string' && !user[key].length))
-            && delete user[key]);
+                (removeEmpty && typeof user[key] === 'string' && !user[key].length)) &&
+            delete user[key]);
     return user;
 };
 
@@ -104,20 +107,25 @@ const deleteUserById = (id) => {
 
 const saveUsers = (users) => {
     return new Promise(async (res, rej) => {
-        const roles = await getRoles();
         // remove empty strings, find role
-        let usersToSave = users.map(user => {
-            return processUser({
-                ...user,
-                role: roles.find(role => role.name === user.role)
-                    ._id
-                    .toString()
-            }, true);
-        });
-        if (usersCsvValidator.errors) {
-            rej(new InvalidRequestError(usersCsvValidator.errors));
+        const nonValidRoles = users.filter(user => !Object.values(userRoles).includes(user.role));
+        if (nonValidRoles.length) {
+            rej(new HttpError(nonValidRoles.map(user => user.role).join(', ') + ' are not valid role types'), 400);
         } else {
-            res(Promise.all([...usersToSave.map(user => createOrUpdateUser(user))]));
+            const roles = await getRoles();
+            let usersToSave = users.map(user => {
+                return processUser({
+                    ...user,
+                    role: roles.find(role => role.name === user.role)
+                        ._id
+                        .toString()
+                }, true);
+            });
+            if (usersCsvValidator.errors) {
+                rej(new InvalidRequestError(usersCsvValidator.errors));
+            } else {
+                res(Promise.all([...usersToSave.map(user => createOrUpdateUser(user))]));
+            }
         }
     });
 
